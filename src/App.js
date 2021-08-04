@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Footer from "./compnents/Footer";
+import FormArea from "./compnents/FormArea";
+import Header from "./compnents/Header";
+import Note from "./compnents/Note";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    const [notes, setNotes] = useState([]);
+    function addNote(note) {
+        setNotes(preNotes=>{
+            return [...preNotes, note]
+        });
+    }
+    function delNote(id) {
+        setNotes(preNotes=>{
+            return preNotes.filter((note, index)=>{
+                return index !== id
+            });
+        });
+        
+    }
+   return (
+    <div>
+       <Header/>
+       <FormArea addNote={addNote} />
+       {notes.map((note, index) =>
+        <Note
+            id={index}
+            delNote={delNote}
+            title={note.title}
+            content={note.content} />
+       )}
+       <Footer/>
     </div>
-  );
+
+   
+    );
 }
 
-export default App;
+export default App
